@@ -1,7 +1,14 @@
 package com.sywyg;
 
 /**
- * 找到单链表的倒数第k个节点（金典P118，剑指offerP106）。
+ * 鲁棒性也成为健壮性，是指程序能够判断输入是否合乎规范要求，并对不合要求的输入予以合理的处理。
+ * 容错性是鲁棒性的一个重要体现。
+ * 提高代码鲁棒性的有效途径是进行防御性编程，防御性编程是一种编程习惯，
+ * 是指预见在什么地方可能会出现问题，并为这些可能出现问题制定处理方式。
+ * 在面试时，最常用也是最有效的防御性编程是在函数入口添加代码以验证用户输入是否符合要求。
+ */
+/**
+ * 题目1：找到单链表的倒数第k个节点（金典P118，剑指offerP106）。
  * 假设最后一个为倒数第一个,若最后一个为第0个呢？
  * 
  * @author sywyg
@@ -9,7 +16,9 @@ package com.sywyg;
  */
 public class Question2{
 	/**
-	 *功能测试，特殊测试，分析时间复杂度
+	 * 功能测试：第k个节点在中间，在头节点，在尾节点
+	 * 特殊测试：头节点为null，k为0，节点个数小于k个
+	 * 分析时间复杂度：O(n)，空间复杂度为：O(1)
 	 */
 	public static void main(String[] args){
 		//Node<Integer> head = null;
@@ -42,13 +51,15 @@ public class Question2{
 		Node<Integer> nAhead = head;
 		//慢指针
 		Node<Integer> nBehind = head;
-		//快指针先走k步
+		//快指针先走k-1步
 		for(int i = 0;i<k-1;i++){
-			if(nAhead == null){return null;}
-			nAhead = nAhead.getNext();
+			//判断是否存在倒数第k个节点
+			if(nAhead.getNext() != null)
+				nAhead = nAhead.getNext();
+			else
+			    return null;
 		}
-		//判断是否存在倒数第k个节点
-		if(nAhead == null){return null;}
+		//if(nAhead == null){return null;}
 		while(nAhead.getNext() != null){
 			nAhead = nAhead.getNext();
 			nBehind = nBehind.getNext();
